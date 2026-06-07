@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nazrin Naim | Glassmorphism Portfolio</title>
+    <style>
+      /* =========================================================
+           1. ROOT VARIABLES & THEME SETTINGS
+           ========================================================= */
+      :root {
+        /* Warna Tema Kuning Emas & Kaca */
+        --accent: #f59e0b;
+        --accent-hover: #d97706;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+
+        /* Konfigurasi Kaca (Glassmorphism) */
+        --glass-bg: rgba(17, 25, 40, 0.6); /* Gelap kebiruan lutsinar */
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          "Consolas", "Courier New", monospace; /* Mengekalkan Vibe IDE */
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: #0b1121;
+        color: var(--text-muted);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: var(--text-main);
+      }
+      a {
+        text-decoration: none;
+        color: var(--accent);
+        transition: all 0.3s ease;
+      }
+      a:hover {
+        color: var(--accent-hover);
+      }
+
+      /* =========================================================
+           2. ANIMATED BACKGROUND (GLOWING ORBS)
+           ========================================================= */
+      .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        overflow: hidden;
+        background: #0b1121;
+      }
+
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.5;
+        animation: float 20s infinite ease-in-out alternate;
+      }
+
+      .orb-1 {
+        width: 400px;
+        height: 400px;
+        background: rgba(245, 158, 11, 0.3); /* Kuning Emas glow */
+        top: -10%;
+        left: -10%;
+      }
+
+      .orb-2 {
+        width: 500px;
+        height: 500px;
+        background: rgba(16, 185, 129, 0.2); /* Emerald glow */
+        bottom: -20%;
+        right: -10%;
+        animation-delay: -5s;
+      }
+
+      .orb-3 {
+        width: 300px;
+        height: 300px;
+        background: rgba(56, 189, 248, 0.2); /* Cyan glow */
+        top: 40%;
+        left: 50%;
+        animation-delay: -10s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        100% {
+          transform: translate(50px, 100px) scale(1.2);
+        }
+      }
+
+      /* =========================================================
+           3. CORE GLASSMORPHISM UTILITY CLASS
+           ========================================================= */
+      .glass-panel {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        border-radius: 16px;
+      }
+
+      /* =========================================================
+           4. NAVIGATION
+           ========================================================= */
+      nav {
+        position: fixed;
+        top: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 1200px;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--text-main);
+        text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+      }
+
+      .nav-links a {
+        margin-left: 2rem;
+        color: var(--text-main);
+        font-weight: bold;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+        text-shadow: 0 0 8px var(--accent);
+      }
+
+      /* =========================================================
+           5. BUTTONS
+           ========================================================= */
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 2.5rem;
+        background: rgba(245, 158, 11, 0.2);
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        border-radius: 8px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        backdrop-filter: blur(4px);
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+      }
+
+      .btn:hover {
+        background: var(--accent);
+        color: #0b1121;
+        box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+        transform: translateY(-2px);
+      }
+
+      /* =========================================================
+           6. LAYOUT SECTIONS
+           ========================================================= */
+      section {
+        padding: 8rem 5% 5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      }
+
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 0;
+      }
+
+      .hero h1 {
+        font-size: 4.5rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.1;
+      }
+      .hero h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        font-weight: normal;
+        min-height: 2rem;
+        display: block;
+        color: var(--accent);
+      }
+      .hero p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin-bottom: 2.5rem;
+      }
+
+      .hero-image img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover; /* Pastikan gambar tak herot */
+        border-radius: 50%; /* Bentuk bulat */
+        border: 4px solid var(--accent);
+        box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+        transition: transform 0.5s ease;
+      }
+
+      .hero-image img:hover {
+        transform: scale(1.05) rotate(5deg);
+      }
+
+      /* Responsive untuk mobile */
+      @media (max-width: 900px) {
+        .hero-content {
+          flex-direction: column-reverse;
+          text-align: center;
+        }
+        .hero-image img {
+          width: 200px;
+          height: 200px;
+        }
+      }
+
+      /* About & Skills */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .about-text {
+        padding: 2.5rem;
+      }
+      .about-text h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: var(--accent);
+      }
+      .about-text p {
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+      }
+
+      .skills-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .skill-box {
+        padding: 1.5rem;
+        transition: transform 0.3s ease;
+      }
+      .skill-box:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent);
+      }
+      .skill-box h4 {
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      /* Projects Section */
+      .project-card {
+        margin-bottom: 4rem;
+        overflow: hidden;
+      }
+      .project-content {
+        padding: 3rem;
+      }
+      .project-content > h3 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        color: var(--accent);
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 1rem;
+      }
+
+      .project-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+      .project-step {
+        margin-bottom: 1.8rem;
+      }
+      .project-step h4 {
+        font-size: 1.1rem;
+        color: var(--text-main);
+        margin-bottom: 0.5rem;
+        opacity: 0.9;
+      }
+      .project-step p {
+        color: var(--text-muted);
+      }
+
+      .visual-placeholder {
+        width: 100%;
+        height: 350px;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px dashed rgba(245, 158, 11, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        margin-top: 3rem;
+        color: var(--accent);
+        text-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .visual-placeholder:hover {
+        background: rgba(0, 0, 0, 0.5);
+        border-color: var(--accent);
+      }
+
+      .visual-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Pecah kepada 2 kolum sama besar */
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .visual-item img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 12px;
+
+        /* Effect Glassmorphism pada gambar */
+        border: 1px solid rgba(255, 255, 255, 0.15); /* Border nipis */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+        /* Sedikit kesan 'glossy' */
+        filter: brightness(1.1) contrast(1.1);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
+      }
+
+      /* Effect apabila tetikus di atas gambar (Zoom & Glow) */
+      .visual-item img:hover {
+        transform: scale(1.03);
+        border-color: var(--accent); /* Border bertukar warna emas masa hover */
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); /* Glow emas muncul */
+        filter: brightness(1.2);
+      }
+
+      /* Responsive: Kalau skrin kecil, dia akan jadi 1 kolum balik */
+      @media (max-width: 768px) {
+        .visual-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Contact Section */
+      .contact {
+        text-align: center;
+        padding-bottom: 5rem;
+      }
+      .contact-box {
+        padding: 4rem 2rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .contact-box h2 {
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+      .contact-links {
+        margin-top: 2.5rem;
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+      }
+      .contact-links a {
+        font-size: 1.3rem;
+        color: var(--text-main);
+        border-bottom: 1px solid transparent;
+        padding-bottom: 5px;
+      }
+      .contact-links a:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+        text-shadow: 0 0 10px var(--accent);
+      }
+
+      .tech-stack {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 2.5rem; /* Tambah jarak di bawah ikon */
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .tech-icon {
+        width: 50px;
+        height: 50px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05); /* Latar belakang kaca seragam */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px; /* Semua jadi kotak membulat yang sama */
+        margin: 5px;
+        transition: 0.3s;
+      }
+
+      .tech-icon:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-5px);
+      }
+
+      /* =========================================================
+           7. RESPONSIVE DESIGN
+           ========================================================= */
+      @media (max-width: 900px) {
+        .about-grid,
+        .project-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+        .hero h1 {
+          font-size: 3rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .project-content {
+          padding: 2rem;
+        }
+
+        .typing-text {
+          color: var(--accent);
+          border-right: 3px solid var(--accent); /* Kursor */
+          padding-right: 5px;
+          animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+          from,
+          to {
+            border-color: transparent;
+          }
+          50% {
+            border-color: var(--accent);
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-animation">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <nav class="glass-panel">
+      <div class="logo">&lt;Nazrin/&gt;</div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div
+        class="hero-content"
+        style="display: flex; align-items: center; gap: 4rem; width: 100%"
+      >
+        <div class="hero-text">
+          <h1>Nazrin Naim</h1>
+          <h2 class="typing-text">Full-Stack Developer</h2>
+          <p>
+            Transforming manual workflows into functional, digitized web
+            solutions using clean code and efficient database architecture.
+          </p>
+          <!-- Tech Stack Icons -->
+          <div
+            class="tech-stack"
+            style="
+              display: flex;
+              gap: 1.5rem;
+              margin-top: 2rem;
+              flex-wrap: wrap;
+              align-items: center;
+            "
+          >
+            <img src="images/php.png" alt="PHP" title="PHP" class="tech-icon" />
+            <img
+              src="images/laravel.png"
+              alt="Laravel"
+              title="Laravel"
+              class="tech-icon"
+            />
+            <img
+              src="images/mysql.png"
+              alt="MySQL"
+              title="MySQL"
+              class="tech-icon"
+            />
+            <img
+              src="images/javascript2.jpg"
+              alt="JavaScript"
+              title="JavaScript"
+              class="tech-icon"
+            />
+            <img
+              src="images/powerbi2.png"
+              alt="Power BI"
+              title="Power BI"
+              class="tech-icon"
+            />
+            <img src="images/git.png" alt="Git" title="Git" class="tech-icon" />
+          </div>
+          <a href="#projects" class="btn">Initialize Projects</a>
+        </div>
+
+        <!-- Bahagian Gambar Profil -->
+        <div class="hero-image">
+          <img
+            src="images/Passport.jpg"
+            alt="Nazrin Naim"
+            class="glass-panel"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2 class="section-title">Core Competencies</h2>
+      <div class="about-grid">
+        <div class="about-text glass-panel">
+          <h3>System Status: Online</h3>
+          <p>
+            Software Engineering graduate from Universiti Malaysia Pahang
+            Al-Sultan Abdullah. Experienced in developing and maintaining
+            dynamic web applications.
+          </p>
+          <p>
+            My technical portfolio encompasses corporate platforms, internal
+            administrative tools, and comprehensive academic web projects
+            designed to optimize data flow and human-computer interaction.
+          </p>
+          <br />
+          <a href="Resume_Nazrin_Naim.pdf" download class="btn"
+            >Extract CV .PDF</a
+          >
+        </div>
+
+        <div class="skills-container" id="skills">
+          <div class="skill-box glass-panel">
+            <h4>Languages</h4>
+            <p>PHP, JavaScript, Python, Java, C, HTML/CSS</p>
+          </div>
+          <div class="skill-box glass-panel">
+            <h4>Frameworks</h4>
+            <p>Laravel, Filament, Flutter, Tailwind, Bootstrap</p>
+          </div>
+          <div class="skill-box glass-panel">
+            <h4>Databases & API</h4>
+            <p>MySQL, Firebase, RESTful API, JSON</p>
+          </div>
+          <div class="skill-box glass-panel">
+            <h4>Tools & Editing</h4>
+            <p>Power BI, Excel, Git, GitHub, VS Code, CapCut (Multimedia)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-title">Technical Portfolio</h2>
+
+      <!-- Project 1: Data Analytics (Infini Telco) -->
+      <div class="project-card glass-panel">
+        <div class="project-content">
+          <h3>
+            [01] Customer Churn Analysis: Infini Telco Industry (K-Youth x GIFT
+            Project)
+          </h3>
+          <div class="project-grid">
+            <div>
+              <div class="project-step">
+                <h4>02. Problem Statement</h4>
+                <p>
+                  Infini Telco faced high customer churn rates. The business
+                  needed to identify key patterns and pain points causing
+                  customer loss to improve retention strategies.
+                </p>
+              </div>
+              <div class="project-step">
+                <h4>03. Dataset & Tools</h4>
+                <p>
+                  Customer subscription data, Power BI (Dashboarding), Excel
+                  (Diagnostic Charts), SQL.
+                </p>
+              </div>
+            </div>
+            <div>
+              <div class="project-step">
+                <h4>04. Methodology & Flow</h4>
+                <p>
+                  Performed data cleaning and pipeline extraction, followed by
+                  developing interactive macro-driven reporting matrices to
+                  visualize churn patterns by age group.
+                </p>
+              </div>
+              <div class="project-step">
+                <h4>06. Key Business Impact</h4>
+                <p>
+                  Reduced customer churn risk profile through precise metric
+                  optimization and isolated high-value customer clusters for
+                  target acquisition campaigns[cite: 1].
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Tempat letak Dashboard Power BI / Screenshot -->
+          <!-- Visual Container yang dipecahkan kepada 2 -->
+          <div class="visual-grid">
+            <div class="visual-item">
+              <img
+                src="images/ProductCat.jpg"
+                alt="Dashboard 1"
+                class="glass-panel"
+              />
+              <p
+                style="text-align: center; margin-top: 10px; font-size: 0.8rem"
+              >
+                [Dashboard Overview - Product Categorization]
+              </p>
+            </div>
+            <div class="visual-item">
+              <img
+                src="images/CustomerSegmentation.jpg"
+                alt="Dashboard 2"
+                class="glass-panel"
+              />
+              <p
+                style="text-align: center; margin-top: 10px; font-size: 0.8rem"
+              >
+                [Dashboard Overview - Customer Segmentation]
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card glass-panel">
+        <div class="project-content">
+          <h3>
+            [01] Backend Architecture for myHSE Sdn Bhd (Internship Project)
+          </h3>
+          <div class="project-grid">
+            <div>
+              <div class="project-step">
+                <h4>02. Problem Statement</h4>
+                <p>
+                  The company relied heavily on manual paperwork for
+                  administrative tasks, resulting in severe bottlenecks for
+                  operational efficiency and data retrieval latency.
+                </p>
+              </div>
+              <div class="project-step">
+                <h4>03. Dataset & Stack</h4>
+                <p>PHP, Laravel Framework, MySQL Database.</p>
+              </div>
+            </div>
+            <div>
+              <div class="project-step">
+                <h4>04. Methodology & Flow</h4>
+                <p>
+                  Engineered the backend structure to strictly digitize three
+                  key administrative workflows: quotation generation, invoice
+                  tracking, and purchase order processing.
+                </p>
+              </div>
+              <div class="project-step">
+                <h4>06. Business Impact</h4>
+                <p>
+                  Successfully executed the transition from manual paperwork to
+                  a centralized digital ecosystem, accelerating document
+                  retrieval and securing data integrity.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card glass-panel">
+        <div class="project-content">
+          <h3>[01] End-to-End Donation Platform (FYP)</h3>
+          <div class="project-grid">
+            <div>
+              <div class="project-step">
+                <h4>02. Problem Statement</h4>
+                <p>
+                  Rumah Penyayang Tun Abdul Razak required a secure, centralized
+                  digital terminal to manage incoming donations and provide a
+                  frictionless experience for donors.
+                </p>
+              </div>
+              <div class="project-step">
+                <h4>03. Dataset & Stack</h4>
+                <p>
+                  Laravel, Filament Admin, Tailwind CSS, ToyyibPay Payment
+                  Gateway API.
+                </p>
+              </div>
+            </div>
+            <div>
+              <div class="project-step">
+                <h4>04. Methodology & Flow</h4>
+                <p>
+                  Developed a responsive interface using Tailwind CSS and
+                  executed server-side integration with ToyyibPay to facilitate
+                  encrypted, real-time financial transactions.
+                </p>
+              </div>
+              <div class="project-step">
+                <h4>06. Business Impact</h4>
+                <p>
+                  Established a secure, automated transaction pipeline,
+                  fundamentally modernizing the organization's fundraising and
+                  financial tracking capabilities.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="visual-grid">
+            <div class="visual-item">
+              <img src="images/IFM.png" alt="Dashboard 1" class="glass-panel" />
+              <p
+                style="text-align: center; margin-top: 10px; font-size: 0.8rem"
+              >
+                [Dashboard Overview]
+              </p>
+            </div>
+            <div class="visual-item">
+              <img
+                src="images/IFM2.png"
+                alt="Dashboard 1"
+                class="glass-panel"
+              />
+              <p
+                style="text-align: center; margin-top: 10px; font-size: 0.8rem"
+              >
+                [Dashboard Overview]
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+      <h2 class="section-title">Professional Experience</h2>
+      <div
+        class="glass-panel"
+        style="padding: 3rem; max-width: 900px; margin: 0 auto"
+      >
+        <!-- Experience 1: Yuno Solution (Akan bermula - Atas) -->
+        <div
+          class="project-step"
+          style="
+            border-left: 2px solid var(--accent);
+            padding-left: 2rem;
+            margin-bottom: 2.5rem;
+          "
+        >
+          <h4 style="font-size: 1.3rem; margin-bottom: 0.5rem">
+            Full-Stack Developer | Yuno Solution
+          </h4>
+          <p
+            style="color: var(--accent); font-weight: bold; margin-bottom: 1rem"
+          >
+            Starting June 2026
+          </p>
+          <ul style="list-style: none; color: var(--text-muted)">
+            <li style="margin-bottom: 0.5rem">
+              • Set to join the development team as a Full-Stack Developer to
+              manage end-to-end web solutions.
+            </li>
+            <li style="margin-bottom: 0.5rem">
+              • Excited to contribute to the full development lifecycle within a
+              dynamic, agile-driven team environment.
+            </li>
+            <li style="margin-bottom: 0.5rem">
+              • Eager to leverage technical expertise gained from rigorous
+              technical assessments to deliver high-quality, scalable code
+              solutions.
+            </li>
+          </ul>
+        </div>
+
+        <!-- Experience 2: Internship (Bawah) -->
+        <div
+          class="project-step"
+          style="border-left: 2px solid var(--glass-border); padding-left: 2rem"
+        >
+          <h4 style="font-size: 1.3rem; margin-bottom: 0.5rem">
+            Software Engineering Intern | myHSE Sdn Bhd
+          </h4>
+          <p
+            style="
+              color: var(--text-main);
+              font-weight: bold;
+              margin-bottom: 1rem;
+            "
+          >
+            Feb 2026 - May 2026
+          </p>
+          <ul style="list-style: none; color: var(--text-muted)">
+            <li style="margin-bottom: 0.5rem">
+              • Spearheaded the digitization of company administrative workflows
+              by developing and maintaining key modules for the internal system.
+            </li>
+            <li style="margin-bottom: 0.5rem">
+              • Designed and implemented a company homepage to enhance digital
+              presence and operational efficiency.
+            </li>
+            <li style="margin-bottom: 0.5rem">
+              • Collaborated with team members to transition manual paperwork
+              into a centralized digital database system.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education & Certificates Section -->
+    <section id="education">
+      <h2 class="section-title">Academic & Credentials</h2>
+      <div class="about-grid">
+        <!-- Education -->
+        <div class="glass-panel" style="padding: 2.5rem">
+          <h3 style="color: var(--accent); margin-bottom: 1.5rem">Education</h3>
+          <div class="project-step" style="margin-bottom: 2rem">
+            <h4>Universiti Malaysia Pahang Al-Sultan Abdullah</h4>
+            <p style="color: var(--text-main)">
+              Bachelor of Computer Science (Software Engineering) with Honours
+            </p>
+            <p style="font-size: 0.9rem; opacity: 0.8">
+              Oct 2021 - Jan 2026 | CGPA: 3.58
+            </p>
+          </div>
+          <div class="project-step">
+            <h4>Universiti Teknologi MARA</h4>
+            <p style="color: var(--text-main)">Foundation in Engineering</p>
+            <p style="font-size: 0.9rem; opacity: 0.8">CGPA: 3.56</p>
+          </div>
+        </div>
+
+        <!-- Certificates & Awards -->
+        <div class="glass-panel" style="padding: 2.5rem">
+          <h3 style="color: var(--accent); margin-bottom: 1.5rem">
+            Certifications & Awards
+          </h3>
+          <div class="project-step" style="margin-bottom: 1.5rem">
+            <h4>K-Youth Employability Program</h4>
+            <p style="color: var(--text-main)">Participant | GIFT 2026</p>
+          </div>
+          <div class="project-step" style="margin-bottom: 1.5rem">
+            <h4>Hackathon X Petakom 2024</h4>
+            <p style="color: var(--text-main)">Participant</p>
+          </div>
+          <div class="project-step">
+            <h4>AICD 2021</h4>
+            <p style="color: var(--text-main)">Silver Award</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact-box glass-panel">
+        <h2>Open Connection</h2>
+        <p>Based in Kemasik, Terengganu.</p>
+        <div class="contact-links">
+          <a href="mailto:nazrinnaim.nn2800@gmail.com">Email</a>
+          <a href="https://linkedin.com/in/your-profile" target="_blank"
+            >LinkedIn</a
+          >
+          <a href="https://github.com/your-username" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </section>
+    <script>
+      const textElement = document.querySelector(".typing-text");
+      const phrases = [
+        "Software Engineer",
+        "Full-Stack Developer",
+        "PHP Specialist",
+        "Laravel Enthusiast",
+        "Problem Solver",
+      ];
+      let phraseIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function type() {
+        const currentPhrase = phrases[phraseIndex];
+
+        if (isDeleting) {
+          textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+          charIndex++;
+        }
+
+        let typeSpeed = isDeleting ? 50 : 150;
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+          typeSpeed = 2000; // Pause sebelum padam
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+
+        setTimeout(type, typeSpeed);
+      }
+
+      document.addEventListener("DOMContentLoaded", type);
+    </script>
+  </body>
+</html>
